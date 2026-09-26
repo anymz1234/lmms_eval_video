@@ -89,7 +89,11 @@ class VLLMFix(VLLMChat):
         est_video_tokens = int(nframes) // 2 * int(max_pixels) // 784 + 64  # frame pairs x (28x28 px per token) + slack
         kwargs.setdefault("max_num_batched_tokens", max_model_len)
         if est_video_tokens > int(kwargs["max_num_batched_tokens"]):
-            raise ValueError(f"vllm_fix: a {nframes}-frame video at max_pixels={max_pixels} needs ~{est_video_tokens} vision tokens, " f"more than max_num_batched_tokens={kwargs['max_num_batched_tokens']} (and max_model_len={max_model_len}); " "lower nframes/max_pixels or raise max_model_len")
+            raise ValueError(
+                f"vllm_fix: a {nframes}-frame video at max_pixels={max_pixels} needs ~{est_video_tokens} vision tokens, "
+                f"more than max_num_batched_tokens={kwargs['max_num_batched_tokens']} (and max_model_len={max_model_len}); "
+                "lower nframes/max_pixels or raise max_model_len"
+            )
 
         # vLLM's default per-prompt limit is 1 video / 1 image, which is what the .mp4 tasks need.
         super().__init__(**kwargs)

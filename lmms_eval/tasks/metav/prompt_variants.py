@@ -48,7 +48,10 @@ VARIANTS = {
         "videomme": ("videomme.utils.videomme_doc_to_text", {"pre_prompt": "", "post_prompt": "\nAnswer with the option's letter from the given choices directly."}),
         "longvideobench_val_v": ("longvideobench.utils.longvideobench_doc_to_text", {"pre_prompt": "", "post_prompt": "Answer with the option's letter from the given choices directly.\n"}),
         "lvbench": ("lvbench.utils.lvbench_doc_to_text", {"pre_prompt": "", "post_prompt": "\nAnswer the question with the option letter"}),
-        "vsibench": ("vsibench.utils.vsibench_doc_to_text", {"pre_prompt": "", "mca_post_prompt": "Answer with the option's letter from the given choices directly.", "na_post_prompt": "Please answer the question using a single word or phrase."}),
+        "vsibench": (
+            "vsibench.utils.vsibench_doc_to_text",
+            {"pre_prompt": "", "mca_post_prompt": "Answer with the option's letter from the given choices directly.", "na_post_prompt": "Please answer the question using a single word or phrase."},
+        ),
         "video_mmmu_perception": ("videommmu.utils.videommmu_doc_to_text_perception_comprehension", _VMMMU_KWARGS),
         "video_mmmu_comprehension": ("videommmu.utils.videommmu_doc_to_text_perception_comprehension", _VMMMU_KWARGS),
         "video_mmmu_adaptation": ("videommmu.utils.videommmu_doc_to_text_adaptation", _VMMMU_KWARGS),

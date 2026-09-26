@@ -24,10 +24,9 @@ from functools import partial
 
 import datasets
 
-
 # accept the pre-rename environment variables as aliases of METAV_*
 for _k in [k for k in os.environ if k.startswith("META_VIDEOBENCH_")]:
-    os.environ.setdefault("METAV_" + _k[len("META_VIDEOBENCH_"):], os.environ[_k])
+    os.environ.setdefault("METAV_" + _k[len("META_VIDEOBENCH_") :], os.environ[_k])
 
 from lmms_eval.tasks.longvideobench.utils import (  # noqa: F401
     longvideobench_aggregate_results,
@@ -59,7 +58,6 @@ from lmms_eval.tasks.vsibench.utils import (  # noqa: F401
     vsibench_doc_to_visual,
     vsibench_process_results,
 )
-
 
 # ---- response cleaning ---------------------------------------------------------
 # Some models wrap the answer in their own markers, which every source's parser then fails to read:
@@ -112,14 +110,18 @@ def _first_number(text):
 
 
 def _vsi_numeric_fallback(doc, text):
-    from lmms_eval.tasks.vsibench.utils import NA_QUESTION_TYPES, fuzzy_matching, to_float
+    from lmms_eval.tasks.vsibench.utils import (
+        NA_QUESTION_TYPES,
+        fuzzy_matching,
+        to_float,
+    )
 
     if doc.get("question_type") not in NA_QUESTION_TYPES or not isinstance(text, str):
         return text
     if to_float(fuzzy_matching(text)) is not None:
-        return text                                   # the source parser can already read it
+        return text  # the source parser can already read it
     tails = _ANSWER_TAIL_RE.split(text)
-    if len(tails) > 1:                                # CoT reply: prefer what follows the last "Answer:"
+    if len(tails) > 1:  # CoT reply: prefer what follows the last "Answer:"
         n = _first_number(tails[-1])
         if n is not None:
             return n
@@ -174,6 +176,7 @@ def vsibench_aggregate_overall(results):
     if rel:
         output["object_rel_direction_accuracy"] = sum(rel) / len(rel)
     return round(sum(output.values()) / len(output), 6) if output else 0.0
+
 
 _IDS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "metav_ids.json")
 _IDS = json.load(open(_IDS_PATH))  # source task -> dataset-native ids of the 1000 Meta-VideoBench items

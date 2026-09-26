@@ -200,7 +200,7 @@ class VLLM(VLLMSimple):
                 )
                 # breakpoint()
                 return [o.outputs[0].text for o in response]
-                
+
             response_text = self._run_tp_synced(list(zip(batched_messages, batched_sampling_params)), _run_chat)
             end_time = time.time()
 

@@ -24,10 +24,13 @@ modified; see eval_scripts/runners/run_video_qa_vllm_fix.sh.
 
 import os
 
+from vllm_fix.video_loader import (  # registers the torchcodec loader with vLLM
+    LOADER_NAME,
+    install_media_io_patch,
+)
+
 from lmms_eval.models import MODEL_REGISTRY_V2
 from lmms_eval.models.registry_v2 import ModelManifest
-
-from vllm_fix.video_loader import LOADER_NAME, install_media_io_patch  # registers the torchcodec loader with vLLM
 
 MODEL_NAME = "vllm_fix"
 
